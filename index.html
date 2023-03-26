@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      * {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-weight: 400;
+      }
+
+      /* Container styles */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background-color: #36393f;
+      }
+
+      /* .container {
+        display: flex;
+        flex-direction: row;
+        background-color: #36393f;
+        padding: 20px;
+        padding-top: 70px;
+      } */
+
+      .container {
+        display: flex;
+        flex-direction: row;
+        height: 100vh;
+      }
+
+      /* Message styles */
+      .message {
+        background-color: #40444b;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        padding: 15px;
+      }
+
+      /* User info styles */
+      .user-info {
+        align-items: center;
+        display: flex;
+        margin-bottom: 5px;
+      }
+
+      .avatar {
+        border-radius: 50%;
+        margin-right: 2px;
+      }
+
+      .username {
+        color: #7289da;
+        font-weight: bold;
+        margin-right: 5px;
+      }
+
+      .timestamp {
+        color: #b9bbbe;
+        font-size: 12px;
+      }
+
+      /* Content styles */
+      .content {
+        color: #dcddde;
+        font-size: 14px;
+      }
+
+      /* Chat container styles */
+      .chat-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        background-color: #202225;
+        color: #dcddde;
+        font-size: 14px;
+        height: calc(100vh - 50px);
+        padding: 10px;
+        overflow-y: auto;
+      }
+
+      /* Input container styles */
+      .input-container {
+        display: flex;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        left: calc(15vw + 24px);
+        width: calc(85vw - 60px);
+        padding: 20px;
+        background: linear-gradient(0deg, #36393f 0%, #36393f 70%, rgba(64,68,75,0) 80%);
+      }
+
+      .message-input {
+        background-color: #40444b;
+        border: none;
+        border-radius: 8px;
+        color: #dcddde;
+        flex-grow: 1;
+        font-size: 18px;
+        padding: 10px;
+        margin-right: 10px;
+      }
+
+      .send-button {
+        background-color: #7289da;
+        border: none;
+        border-radius: 8px;
+        color: #dcddde;
+        font-size: 14px;
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .chat-window {
+        flex-grow: 1;
+        padding: 12px;
+        background-color: #36393f;
+        color: #fff;
+      }
+
+      .messages
+      {
+        margin-top: 50px;
+        padding-bottom: 80px;
+      }
+
+      .send-button:hover {
+        background-color: #677bc4;
+      }
+
+      /* Top bar styles */
+      .top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px;
+        background-color: #36393f;
+        color: #fff;
+        border-bottom: solid #272a2e;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: calc(100vw - 16px);
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+      }
+
+      .username {
+        margin-left: 12px;
+        font-weight: bold;
+      }
+
+      .search-bar {
+        display: flex;
+        align-items: center;
+        background-color: #202225;
+        border-radius: 8px;
+        padding: 6px 12px;
+
+      }
+
+      .search-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+      }
+
+      .search-input {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        color: #fff;
+      }
+
+      .sidebar {
+        background-color: #2f3136;
+        color: #fff;
+        padding: 12px;
+        flex-basis: 15%;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+
+      .recent-conversations {
+        margin-top: 50px;
+        margin-bottom: 12px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .conversation-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+      }
+
+      .conversation-list li {
+        padding: 12px;
+        cursor: pointer;
+    }
+
+    .conversation-list li:hover {
+      background-color: #36393f;
+      border-radius: 5px;
+    }
+    
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  margin: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #36393f; 
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #36393f; 
+}
+  </style>
+</head>
+
+<body>
+  <div class="top-bar">
+    <div class="user-info">
+      <span class="username">John Doe</span>
+    </div>
+    <div class="search-bar">
+      <input type="text" class="search-input" placeholder="Search">
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+      <div class="recent-conversations">Chat Rooms</div>
+      <ul class="conversation-list">
+        <li>Conversation 1</li>
+        <li>Conversation 2</li>
+        <li>Conversation 3</li>
+        <li>Conversation 4</li>
+        <li>Conversation 5</li>
+        <li>Conversation 6</li>
+        <li>Conversation 7</li>
+        <li>Conversation 8</li>
+        <li>Conversation 9</li>
+        <li>Conversation 10</li>
+      </ul>
+    </div>
+
+    <div class="chat-window" id="chat-window">
+      <div class="messages" id="messages">
+      <div class="message">
+        <div class="user-info">
+          <img src="https://via.placeholder.com/30x30" alt="user-avatar" class="avatar">
+          <div class="username">Username</div>
+          <div class="timestamp">Today at 12:00 PM</div>
+        </div>
+        <div class="content">
+          This is a message.
+        </div>
+      </div>
+
+      <div class="message">
+        <div class="user-info">
+          <img src="https://via.placeholder.com/30x30" alt="user-avatar" class="avatar">
+          <div class="username">Username</div>
+          <div class="timestamp">Today at 12:01 PM</div>
+        </div>
+        <div class="content">
+          This is another message.
+        </div>
+      </div>
+    </div>
+
+      <div class="input-container">
+        <input type="text" placeholder="Type your message here" class="message-input" id="message-box">
+        <button class="send-button">Send</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    const messageBox = document.getElementById("message-box");
+    const chatContainer = document.getElementById("messages");
+
+    function sendMessage(messageContent) {
+      const messageText = messageBox.value;
+      if (messageText !== "") {
+        addMessageToView("https://via.placeholder.com/30x30", "Sprock", "Today at 12:00 PM", messageBox.value)
+
+        messageBox.value = ""
+
+        Document.scrollTop = Document.scrollHeight;
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+        window.scrollTo(0, document.body.scrollHeight);
+      }
+    }
+
+    function addMessageToView(avatarUrl, username, timestampContent, messageContent)
+    {
+      const chatContainer = document.getElementById("messages");
+
+        const message = document.createElement("div");
+        message.classList.add("message");
+
+        const userInfo = document.createElement("div");
+        userInfo.classList.add("user-info");
+        message.appendChild(userInfo);
+
+        const avatar = document.createElement("img");
+        avatar.src = avatarUrl;
+        avatar.alt = "user-avatar";
+        avatar.classList.add("avatar");
+        userInfo.appendChild(avatar);
+
+        const usernameElement = document.createElement("div");
+        usernameElement.textContent = username;
+        usernameElement.classList.add("username");
+        userInfo.appendChild(usernameElement);
+
+        const timestamp = document.createElement("div");
+        timestamp.textContent = timestampContent;
+        timestamp.classList.add("timestamp");
+        userInfo.appendChild(timestamp);
+
+        const content = document.createElement("div");
+        content.textContent = messageContent;
+        content.classList.add("content");
+        message.appendChild(content);
+
+        chatContainer.appendChild(message);
+    }
+
+    messageBox.addEventListener("keydown", function (event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>
